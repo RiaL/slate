@@ -51,27 +51,56 @@
 
 <p>JSON will be returned in all responses from the API including errors. We currently have code examples using curl, you can view code examples in the dark area to the right.</p>
 <h1 id='authentication'>Authentication</h1>
+<p>Wootric expects for the access token key to be included in all API requests that looks like the following:</p>
+
+<p><code class="prettyprint">http://api.staging.wootric.com/v1/end_users.json?access_token=myaccesstoken</code></p>
+
+<p>Access tokens expire 2 hours after creation. New Access tokens can be obtained using refresh tokens which is detailed in the CURL example to the right.</p>
+
+<p><aside class="notice">
+You must replace <code class="prettyprint">myaccesstoken</code> with your personal Access Token.
+</aside></p>
+
 <blockquote>
-<p>To authorize, use this code:</p>
+<p>To retreive an access token using oauth, use this code:</p>
 </blockquote>
-<pre><code class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<pre><code class="highlight shell"><span class="gp">$ </span>curl -i http://api.staging.wootric.com/oauth/token <span class="se">\</span>
+-F <span class="nv">grant_type</span><span class="o">=</span>password <span class="se">\</span>
+-F <span class="nv">username</span><span class="o">=</span>&lt;youremailaddress&gt;<span class="se">\</span>
+-F <span class="nv">password</span><span class="o">=</span>&lt;yourpassword&gt;
 </code></pre>
 
 <blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
+<p>The above command returns JSON structured like this:</p>
 </blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"access_token"</span><span class="p">:</span><span class="s2">"&lt;youraccesstoken&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"token_type"</span><span class="p">:</span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="mi">7200</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"refresh_token"</span><span class="p">:</span><span class="s2">"&lt;yourrefreshtoken&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"scope"</span><span class="p">:</span><span class="s2">"public"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<blockquote>
+<p>To retreive a new access token after it has expired, use this code:</p>
+</blockquote>
+<pre><code class="highlight shell"><span class="gp">$ </span>curl -i http://api.staging.wootric.com/oauth/token <span class="se">\</span>
+-F <span class="nv">grant_type</span><span class="o">=</span>refresh_token <span class="se">\</span>
+-F <span class="nv">refresh_token</span><span class="o">=</span><span class="s2">"&lt;yourrefreshtoken&gt;"</span>
+</code></pre>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
-
-<p><aside class="notice">
-You must replace <code class="prettyprint">meowmeowmeow</code> with your personal API key.
-</aside></p>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"access_token"</span><span class="p">:</span><span class="s2">"&lt;yournewaccesstoken&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"token_type"</span><span class="p">:</span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="mi">7200</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"refresh_token"</span><span class="p">:</span><span class="s2">"&lt;yournewrefreshtoken&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"scope"</span><span class="p">:</span><span class="s2">"public"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
           <h1 id='end-users'>End Users</h1><h2 id='end-user-object'>End User Object</h2>
 <p>A end user object has the following fields:</p>
@@ -129,8 +158,7 @@ You must replace <code class="prettyprint">meowmeowmeow</code> with your persona
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='get-all-end-users'>Get All End Users</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.wootric.com/api/end_users"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<h2 id='get-all-end-users'>Get All End Users</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users?access_token=myaccesstoken"</span>
 </code></pre>
 
 <blockquote>
@@ -162,34 +190,34 @@ You must replace <code class="prettyprint">meowmeowmeow</code> with your persona
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 
-<p>This endpoint retrieves all kittens.</p>
+<p>This endpoint retrieves all end users.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://api.wootric.com/api/end_users</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<p><code class="prettyprint">GET http://api.wootric.com/v1/end_users?access_token=myaccesstoken</code></p>
+<h3 id='scope-parameters'>Scope Parameters</h3>
+<p>Scope paramaters filter your end users and can also be chained together by passing multiple scope paramters in an array.</p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Type</th>
 <th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>page</td>
+<td>integer</td>
+<td>1</td>
+<td>Number of returned page</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>per_page</td>
+<td>integer</td>
+<td>25</td>
+<td>Number of records returned on each page</td>
 </tr>
 </tbody></table>
-
-<p><aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside></p>
-<h2 id='get-a-specific-end-user'>Get a Specific End User</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.wootric.com/api/end_users/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<h2 id='get-a-specific-end-user'>Get a Specific End User</h2><pre><code class="highlight shell">curl <span class="s2">" http://api.wootric.com/v1/end_users/2?access_token=myaccesstoken"</span>
 </code></pre>
 
 <blockquote>
@@ -208,11 +236,9 @@ Remember — a happy kitten is an authenticated kitten!
   </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>This endpoint retrieves a specific kitten.</p>
-
-<p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
+<p>This endpoint retrieves a specific end user.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://api.wootric.com/api/end_users/&lt;ID&gt;</code></p>
+<p><code class="prettyprint">GET http://api.staging.wootric.com/v1/end_users/&lt;ID&gt;</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -282,8 +308,7 @@ Remember — a happy kitten is an authenticated kitten!
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='get-all-responses'>Get All Responses</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.wootric.com/api/end_users/1/responses"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<h2 id='get-all-responses'>Get All Responses</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/responses?access_token=myaccesstoken"</span>
 </code></pre>
 
 <blockquote>
@@ -317,32 +342,32 @@ Remember — a happy kitten is an authenticated kitten!
 
 <p>This endpoint retrieves all responses for end user.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://api.wootric.com/api/end_users/1/responses</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<p><code class="prettyprint">GET http://api.staging.wootric.com/v1/end_users/1/responses?access_token=myaccesstoken</code></p>
+<h3 id='scope-parameters'>Scope Parameters</h3>
+<p>Scope paramaters filter your responses and can also be chained together by passing multiple scope paramters in an array.</p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Type</th>
 <th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>page</td>
+<td>integer</td>
+<td>1</td>
+<td>Number of returned page</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>per_page</td>
+<td>integer</td>
+<td>25</td>
+<td>Number of records returned on each page</td>
 </tr>
 </tbody></table>
-
-<p><aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside></p>
-<h2 id='get-a-specific-response'>Get a Specific Response</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.wootric.com/api/end_users/1/responses/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<h2 id='get-a-specific-response'>Get a Specific Response</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/responses/2?access_token=myaccesstoken"</span>
 </code></pre>
 
 <blockquote>
@@ -362,10 +387,8 @@ Remember — a happy kitten is an authenticated kitten!
 </span></code></pre>
 
 <p>This endpoint retrieves a specific response.</p>
-
-<p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://api.wootric.com/api/end_users/&lt;END_USER_ID&gt;/responses/&lt;ID&gt;</code></p>
+<p><code class="prettyprint">GET http://api.staging.wootric.com/v1/end_users/&lt;END_USER_ID&gt;/responses/&lt;ID&gt;?access_token=myaccesstoken</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -419,8 +442,7 @@ Remember — a happy kitten is an authenticated kitten!
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='get-all-declines'>Get All Declines</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.wootric.com/api/end_users/1/declines"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<h2 id='get-all-declines'>Get All Declines</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/declines?access_token=myaccesstoken"</span>
 </code></pre>
 
 <blockquote>
@@ -446,32 +468,32 @@ Remember — a happy kitten is an authenticated kitten!
 
 <p>This endpoint retrieves all declines for end user.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://api.wootric.com/api/end_users/1/declines</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<p><code class="prettyprint">GET http://api.staging.wootric.com/v1/end_users/1/declines?access_token=myaccesstoken</code></p>
+<h3 id='scope-parameters'>Scope Parameters</h3>
+<p>Scope paramaters filter your declines and can also be chained together by passing multiple scope paramters in an array.</p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Type</th>
 <th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>page</td>
+<td>integer</td>
+<td>1</td>
+<td>Number of returned page</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>per_page</td>
+<td>integer</td>
+<td>25</td>
+<td>Number of records returned on each page</td>
 </tr>
 </tbody></table>
-
-<p><aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside></p>
-<h2 id='get-a-specific-declines'>Get a Specific Declines</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.wootric.com/api/end_users/1/declines/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<h2 id='get-a-specific-declines'>Get a Specific Declines</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/declines/2?access_token=myaccesstoken"</span>
 </code></pre>
 
 <blockquote>
@@ -487,10 +509,8 @@ Remember — a happy kitten is an authenticated kitten!
 </span></code></pre>
 
 <p>This endpoint retrieves a specific decline.</p>
-
-<p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://api.wootric.com/api/end_users/&lt;END_USER_ID&gt;/declines/&lt;ID&gt;</code></p>
+<p><code class="prettyprint">GET http://api.staging.wootric.com/v1/end_users/&lt;END_USER_ID&gt;/declines/&lt;ID&gt;?access_token=myaccesstoken</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -549,8 +569,7 @@ Remember — a happy kitten is an authenticated kitten!
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='get-all-page-views'>Get All Page Views</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.wootric.com/api/end_users/1/page_views"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<h2 id='get-all-page-views'>Get All Page Views</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/page_views?access_token=myaccesstoken"</span>
 </code></pre>
 
 <blockquote>
@@ -578,32 +597,32 @@ Remember — a happy kitten is an authenticated kitten!
 
 <p>This endpoint retrieves all page views for end user.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://api.wootric.com/api/end_users/1/page_views</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<p><code class="prettyprint">GET http://api.staging.wootric.com/v1/end_users/1/page_views?access_token=myaccesstoken</code></p>
+<h3 id='scope-parameters'>Scope Parameters</h3>
+<p>Scope paramaters filter your page views and can also be chained together by passing multiple scope paramters in an array.</p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Type</th>
 <th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>page</td>
+<td>integer</td>
+<td>1</td>
+<td>Number of returned page</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>per_page</td>
+<td>integer</td>
+<td>25</td>
+<td>Number of records returned on each page</td>
 </tr>
 </tbody></table>
-
-<p><aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside></p>
-<h2 id='get-a-specific-page-view'>Get a Specific Page View</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.wootric.com/api/end_users/1/page_views/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<h2 id='get-a-specific-page-view'>Get a Specific Page View</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/page_views/2?access_token=myaccesstoken"</span>
 </code></pre>
 
 <blockquote>
@@ -620,10 +639,8 @@ Remember — a happy kitten is an authenticated kitten!
 </span></code></pre>
 
 <p>This endpoint retrieves a specific page view.</p>
-
-<p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://api.wootric.com/api/end_users/&lt;END_USER_ID&gt;/page_views/&lt;ID&gt;</code></p>
+<p><code class="prettyprint">GET http://api.staging.wootric.com/v1/end_users/&lt;END_USER_ID&gt;/page_views/&lt;ID&gt;?access_token=myaccesstoken</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -642,9 +659,9 @@ Remember — a happy kitten is an authenticated kitten!
 </tbody></table>
 
           <h1 id='errors'>Errors</h1>
-<p><aside class="notice">This error section is stored in a separate file in <code class="prettyprint">includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the <code class="prettyprint">includes</code> folder and add them to the top of your <code class="prettyprint">index.md</code>&rsquo;s frontmatter. Files are included in the order listed.</aside></p>
+<p><aside class="notice">TODO</aside></p>
 
-<p>The Kittn API uses the following error codes:</p>
+<p>The Wootric API uses the following error codes:</p>
 
 <table><thead>
 <tr>
@@ -654,7 +671,7 @@ Remember — a happy kitten is an authenticated kitten!
 </thead><tbody>
 <tr>
 <td>400</td>
-<td>Bad Request &ndash; Your request sucks</td>
+<td>Bad Request &ndash; Your request is incorrect</td>
 </tr>
 <tr>
 <td>401</td>
@@ -662,31 +679,23 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
+<td>Forbidden &ndash; The resources requested is hidden for administrators only</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
+<td>Not Found &ndash; The specified resource could not be found</td>
 </tr>
 <tr>
 <td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
+<td>Method Not Allowed &ndash; You tried to access a resource with an invalid method</td>
 </tr>
 <tr>
 <td>406</td>
 <td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
 </tr>
 <tr>
-<td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&rsquo;m a teapot</td>
-</tr>
-<tr>
 <td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slown down!</td>
+<td>Too Many Requests &ndash; You&rsquo;re requesting too many resources! Slown down!</td>
 </tr>
 <tr>
 <td>500</td>
