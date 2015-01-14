@@ -37,7 +37,7 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
+            <li><a href='https://www.wootric.com/'>Sign Up</a></li>
             <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -115,27 +115,27 @@ You must replace <code class="prettyprint">myaccesstoken</code> with your person
 <tr>
 <td>id</td>
 <td>integer</td>
-<td></td>
+<td>The id of end user</td>
 </tr>
 <tr>
 <td>created_at</td>
 <td>datetime</td>
-<td></td>
+<td>Datetime representation of when the end user was created</td>
 </tr>
 <tr>
 <td>updated_at</td>
 <td>datetime</td>
-<td></td>
+<td>Datetime representation of when the end user was lately updated</td>
 </tr>
 <tr>
 <td>email</td>
 <td>string</td>
-<td></td>
+<td>End user email</td>
 </tr>
 <tr>
 <td>last_surveyed</td>
 <td>datetime</td>
-<td></td>
+<td>Datetime representation of when the end user was lately surveyed</td>
 </tr>
 <tr>
 <td>external_created_at</td>
@@ -145,17 +145,17 @@ You must replace <code class="prettyprint">myaccesstoken</code> with your person
 <tr>
 <td>user_id</td>
 <td>integer</td>
-<td></td>
+<td>The id of user</td>
 </tr>
 <tr>
 <td>page_views_count</td>
 <td>integer</td>
-<td></td>
+<td>Total number of page views</td>
 </tr>
 <tr>
 <td>properites</td>
 <td>hash</td>
-<td></td>
+<td>Properties (i.e. plan, product)</td>
 </tr>
 </tbody></table>
 <h2 id='get-all-end-users'>Get All End Users</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users?access_token=myaccesstoken"</span>
@@ -216,6 +216,12 @@ You must replace <code class="prettyprint">myaccesstoken</code> with your person
 <td>25</td>
 <td>Number of records returned on each page</td>
 </tr>
+<tr>
+<td>created</td>
+<td>hash</td>
+<td>{}</td>
+<td>Hash with properties used to filter your end users by time it can be used with params (UNIX timestamp type) -  <em>eq</em>, <em>lt</em>, <em>lte</em>, <em>gt</em>, <em>gte</em></td>
+</tr>
 </tbody></table>
 <h2 id='get-a-specific-end-user'>Get a Specific End User</h2><pre><code class="highlight shell">curl <span class="s2">" http://api.wootric.com/v1/end_users/2?access_token=myaccesstoken"</span>
 </code></pre>
@@ -265,47 +271,47 @@ You must replace <code class="prettyprint">myaccesstoken</code> with your person
 <tr>
 <td>id</td>
 <td>integer</td>
-<td></td>
+<td>The id of response</td>
 </tr>
 <tr>
 <td>created_at</td>
 <td>datetime</td>
-<td></td>
+<td>Datetime representation of when the response was created</td>
 </tr>
 <tr>
 <td>updated_at</td>
 <td>datetime</td>
-<td></td>
+<td>Datetime representation of when the response was lately updated</td>
 </tr>
 <tr>
 <td>score</td>
 <td>integer</td>
-<td></td>
+<td>The response&rsquo;s score</td>
 </tr>
 <tr>
 <td>text</td>
 <td>text</td>
-<td></td>
+<td>The response&rsquo;s comment</td>
 </tr>
 <tr>
 <td>ip_address</td>
 <td>text</td>
-<td></td>
+<td>The response&rsquo;s IP address</td>
 </tr>
 <tr>
 <td>origin_url</td>
 <td>text</td>
-<td></td>
+<td>The response&rsquo;s origin url</td>
 </tr>
 <tr>
 <td>end_user_id</td>
 <td>integer</td>
-<td></td>
+<td>The id of end user</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>integer</td>
-<td></td>
+<td>The if of user</td>
 </tr>
 </tbody></table>
 <h2 id='get-all-responses'>Get All Responses</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/responses?access_token=myaccesstoken"</span>
@@ -366,6 +372,207 @@ You must replace <code class="prettyprint">myaccesstoken</code> with your person
 <td>25</td>
 <td>Number of records returned on each page</td>
 </tr>
+<tr>
+<td>created</td>
+<td>hash</td>
+<td>{}</td>
+<td>Hash with properties used to filter your responses by time it can be used with params (UNIX timestamp type) -  <em>eq</em>, <em>lt</em>, <em>lte</em>, <em>gt</em>, <em>gte</em></td>
+</tr>
+</tbody></table>
+<h2 id='get-all-promoters-responses'>Get All Promoters Responses</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/responses/promoters?access_token=myaccesstoken"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-12-01 18:36:59"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-12-01 18:36:59"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Great Service"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ip_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"192.168.0.1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"origin_url"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.great-service.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"end_user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-11-01 17:38:50"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-11-01 17:38:50"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nice app"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ip_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"origin_url"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.nice-app.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"end_user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves all promoters responses for end user.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET http://api.staging.wootric.com/v1/end_users/1/responses/promoters?access_token=myaccesstoken</code></p>
+<h3 id='scope-parameters'>Scope Parameters</h3>
+<p>Scope paramaters filter your promoters responses and can also be chained together by passing multiple scope paramters in an array.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>page</td>
+<td>integer</td>
+<td>1</td>
+<td>Number of returned page</td>
+</tr>
+<tr>
+<td>per_page</td>
+<td>integer</td>
+<td>25</td>
+<td>Number of records returned on each page</td>
+</tr>
+<tr>
+<td>created</td>
+<td>hash</td>
+<td>{}</td>
+<td>Hash with properties used to filter your promoters responses by time it can be used with params (UNIX timestamp type) -  <em>eq</em>, <em>lt</em>, <em>lte</em>, <em>gt</em>, <em>gte</em></td>
+</tr>
+</tbody></table>
+<h2 id='get-all-passives-responses'>Get All Passives Responses</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/responses/passives?access_token=myaccesstoken"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-12-01 18:36:59"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-12-01 18:36:59"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cool Site"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ip_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"192.168.0.1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"origin_url"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.cool-site.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"end_user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-11-01 17:38:50"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-11-01 17:38:50"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Good Service"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ip_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"origin_url"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.good-service.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"end_user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves all passives responses for end user.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET http://api.staging.wootric.com/v1/end_users/1/responses/passives?access_token=myaccesstoken</code></p>
+<h3 id='scope-parameters'>Scope Parameters</h3>
+<p>Scope paramaters filter your passives responses and can also be chained together by passing multiple scope paramters in an array.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>page</td>
+<td>integer</td>
+<td>1</td>
+<td>Number of returned page</td>
+</tr>
+<tr>
+<td>per_page</td>
+<td>integer</td>
+<td>25</td>
+<td>Number of records returned on each page</td>
+</tr>
+<tr>
+<td>created</td>
+<td>hash</td>
+<td>{}</td>
+<td>Hash with properties used to filter your passives responses by time it can be used with params (UNIX timestamp type) -  <em>eq</em>, <em>lt</em>, <em>lte</em>, <em>gt</em>, <em>gte</em></td>
+</tr>
+</tbody></table>
+<h2 id='get-all-detractors-responses'>Get All Detractors Responses</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/responses/detractors?access_token=myaccesstoken"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-12-01 18:36:59"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-12-01 18:36:59"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"It doesn't work"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ip_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"192.168.0.1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"origin_url"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.doesnt-work.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"end_user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-11-01 17:38:50"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-11-01 17:38:50"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"score"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Please fix those bugs"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ip_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"origin_url"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.fix-bugs.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"end_user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves all detractors responses for end user.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET http://api.staging.wootric.com/v1/end_users/1/responses/detractors?access_token=myaccesstoken</code></p>
+<h3 id='scope-parameters'>Scope Parameters</h3>
+<p>Scope paramaters filter your detractors responses and can also be chained together by passing multiple scope paramters in an array.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>page</td>
+<td>integer</td>
+<td>1</td>
+<td>Number of returned page</td>
+</tr>
+<tr>
+<td>per_page</td>
+<td>integer</td>
+<td>25</td>
+<td>Number of records returned on each page</td>
+</tr>
+<tr>
+<td>created</td>
+<td>hash</td>
+<td>{}</td>
+<td>Hash with properties used to filter your detractors responses by time it can be used with params (UNIX timestamp type) -  <em>eq</em>, <em>lt</em>, <em>lte</em>, <em>gt</em>, <em>gte</em></td>
+</tr>
 </tbody></table>
 <h2 id='get-a-specific-response'>Get a Specific Response</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/responses/2?access_token=myaccesstoken"</span>
 </code></pre>
@@ -419,27 +626,27 @@ You must replace <code class="prettyprint">myaccesstoken</code> with your person
 <tr>
 <td>id</td>
 <td>integer</td>
-<td></td>
+<td>The id of decline</td>
 </tr>
 <tr>
 <td>end_user_id</td>
 <td>integer</td>
-<td></td>
+<td>The id of end user</td>
 </tr>
 <tr>
 <td>created_at</td>
 <td>datetime</td>
-<td></td>
+<td>Datetime representation of when the decline was created</td>
 </tr>
 <tr>
 <td>updated_at</td>
 <td>datetime</td>
-<td></td>
+<td>Datetime representation of when the decline was lately updated</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>integer</td>
-<td></td>
+<td>The id of user</td>
 </tr>
 </tbody></table>
 <h2 id='get-all-declines'>Get All Declines</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/declines?access_token=myaccesstoken"</span>
@@ -492,6 +699,12 @@ You must replace <code class="prettyprint">myaccesstoken</code> with your person
 <td>25</td>
 <td>Number of records returned on each page</td>
 </tr>
+<tr>
+<td>created</td>
+<td>hash</td>
+<td>{}</td>
+<td>Hash with properties used to filter your declines by time it can be used with params (UNIX timestamp type) -  <em>eq</em>, <em>lt</em>, <em>lte</em>, <em>gt</em>, <em>gte</em></td>
+</tr>
 </tbody></table>
 <h2 id='get-a-specific-declines'>Get a Specific Declines</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/declines/2?access_token=myaccesstoken"</span>
 </code></pre>
@@ -541,32 +754,32 @@ You must replace <code class="prettyprint">myaccesstoken</code> with your person
 <tr>
 <td>id</td>
 <td>integer</td>
-<td></td>
+<td>The id of page view</td>
 </tr>
 <tr>
 <td>end_user_id</td>
 <td>integer</td>
-<td></td>
+<td>The id of end user</td>
 </tr>
 <tr>
 <td>url</td>
 <td>text</td>
-<td></td>
+<td>The URL of page</td>
 </tr>
 <tr>
 <td>at</td>
 <td>datetime</td>
-<td></td>
+<td>Datetime representation of when the page was visited</td>
 </tr>
 <tr>
 <td>created_at</td>
 <td>datetime</td>
-<td></td>
+<td>Datetime representation of when the page view was created</td>
 </tr>
 <tr>
 <td>updated_at</td>
 <td>datetime</td>
-<td></td>
+<td>Datetime representation of when the page view was lately updated</td>
 </tr>
 </tbody></table>
 <h2 id='get-all-page-views'>Get All Page Views</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/page_views?access_token=myaccesstoken"</span>
@@ -621,6 +834,12 @@ You must replace <code class="prettyprint">myaccesstoken</code> with your person
 <td>25</td>
 <td>Number of records returned on each page</td>
 </tr>
+<tr>
+<td>created</td>
+<td>hash</td>
+<td>{}</td>
+<td>Hash with properties used to filter your page views by time it can be used with params (UNIX timestamp type) -  <em>eq</em>, <em>lt</em>, <em>lte</em>, <em>gt</em>, <em>gte</em></td>
+</tr>
 </tbody></table>
 <h2 id='get-a-specific-page-view'>Get a Specific Page View</h2><pre><code class="highlight shell">curl <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/page_views/2?access_token=myaccesstoken"</span>
 </code></pre>
@@ -659,8 +878,6 @@ You must replace <code class="prettyprint">myaccesstoken</code> with your person
 </tbody></table>
 
           <h1 id='errors'>Errors</h1>
-<p><aside class="notice">TODO</aside></p>
-
 <p>The Wootric API uses the following error codes:</p>
 
 <table><thead>
@@ -675,35 +892,15 @@ You must replace <code class="prettyprint">myaccesstoken</code> with your person
 </tr>
 <tr>
 <td>401</td>
-<td>Unauthorized &ndash; Your API key is wrong</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden &ndash; The resources requested is hidden for administrators only</td>
+<td>Unauthorized &ndash; Your access token is wrong</td>
 </tr>
 <tr>
 <td>404</td>
 <td>Not Found &ndash; The specified resource could not be found</td>
 </tr>
 <tr>
-<td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a resource with an invalid method</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many resources! Slown down!</td>
-</tr>
-<tr>
 <td>500</td>
 <td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
 </tr>
 </tbody></table>
 
