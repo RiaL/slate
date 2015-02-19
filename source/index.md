@@ -3,14 +3,16 @@ title: API Reference
 
 language_tabs:
   - shell
-  - ruby
-  - python
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
+  - <a href='https://www.wootric.com/'>Sign Up</a>
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
+  - end_users
+  - responses
+  - declines
+  - page_views
   - errors
 
 search: true
@@ -18,151 +20,86 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Wootric API documentation!
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+You can use our API to access your end users, responses, declines and page views.
 
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+JSON will be returned in all responses from the API including errors. We currently have code examples using curl, you can view code examples in the dark area to the right.
 
 # Authentication
 
-> To authorize, use this code:
+Access token can be retrieved using either grant_type of "password" with your account email and password, or grant_type of "client_credentials" with your application client_id and client_secret.
 
-```ruby
-require 'kittn'
+Wootric expects for the access token key to be included in all API requests that looks like the following for grant_type of "password":
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+`http://api.staging.wootric.com/v1/end_users.json?access_token=myaccesstoken`
 
-```python
-import kittn
+If you are using grant_type of "client_credentials" you need to send the access token as a request header:
 
-api = kittn.authorize('meowmeowmeow')
-```
+`Authorization: Bearer <myaccesstoken>`
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+Access token expires 2 hours after creation. New Access tokens can be obtained using refresh tokens which is detailed in the CURL example to the right.
 
 <aside class="notice">
-You must replace `meowmeowmeow` with your personal API key.
+You must replace `myaccesstoken` with your personal Access Token.
 </aside>
 
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+> To retrieve an access token using oauth, use this code:
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/3"
-  -H "Authorization: meowmeowmeow"
+curl -i http://api.staging.wootric.com/oauth/token \
+-F grant_type=password \
+-F username=<youremailaddress>\
+-F password=<yourpassword>
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "access_token":"<youraccesstoken>",
+  "token_type":"bearer",
+  "expires_in":7200,
+  "refresh_token":"<yourrefreshtoken>",
+  "scope":"public"
+}
+```
+> To retrieve a new access token after it has expired, use this code:
+
+```shell
+curl -i http://api.staging.wootric.com/oauth/token \
+-F grant_type=refresh_token \
+-F refresh_token="<yourrefreshtoken>"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "access_token":"<yournewaccesstoken>",
+  "token_type":"bearer",
+  "expires_in":7200,
+  "refresh_token":"<yournewrefreshtoken>",
+  "scope":"public"
 }
 ```
 
-This endpoint retrieves a specific kitten.
+> To retrieve an access token using credentials, use this code:
 
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+```shell
+curl -X POST http://api.staging.wootric.com/oauth/token \
+-F grant_type=client_credentials \
+-F client_id=<yourclientid> \
+-F client_secret=<yourclientsecret>
+```
 
-### HTTP Request
+> The above command returns JSON structured like this:
 
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the cat to retrieve
-
+```json
+{
+  "access_token":"<youraccesstoken>",
+  "token_type":"bearer",
+  "expires_in":7200,
+  "scope":"public"  
+}
+```
