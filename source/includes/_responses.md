@@ -19,6 +19,61 @@ user_id | integer | The if of user
 ## Get All Responses
 
 ```shell
+curl "http://api.staging.wootric.com/v1/responses?access_token=myaccesstoken"
+
+or
+
+curl -H "Authorization: Bearer myaccesstoken" "http://api.staging.wootric.com/v1/responses"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": 1,
+    "created_at" : "2014-12-01 18:36:59",
+    "updated_at" : "2014-12-01 18:36:59",
+    "score": 10,
+    "text": "Great Service",
+    "ip_address": "192.168.0.1",
+    "origin_url" : "http://www.great-service.com",
+    "end_user_id": 1,
+    "user_id": 16
+  },
+  {
+    "id": 2,
+    "created_at" : "2014-11-01 17:38:50",
+    "updated_at" : "2014-11-01 17:38:50",
+    "score": 0,
+    "text": "Please fix those bugs",
+    "ip_address": "127.0.0.1",
+    "origin_url" : "http://www.fix-bugs.com",
+    "end_user_id": 2,
+    "user_id": 16
+  }
+]
+```
+
+This endpoint retrieves all responses for a user.
+
+### HTTP Request
+
+`GET http://api.staging.wootric.com/v1/end_users/1/responses`
+
+### Scope Parameters
+
+Scope parameters filter your responses and can also be chained together by passing multiple scope parameters in an array.
+
+Parameter | Type | Default | Description
+--------- | ------- | ------- | -----
+page | integer | 1 | Number of returned page
+per_page | integer | 25 | Number of records returned on each page
+created | hash | {} | Hash with properties used to filter your responses by time it can be used with params (UNIX timestamp type) -  *eq*, *lt*, *lte*, *gt*, *gte*
+
+## Get All End User's Responses
+
+```shell
 curl "http://api.staging.wootric.com/v1/end_users/1/responses?access_token=myaccesstoken"
 
 or
@@ -63,7 +118,7 @@ This endpoint retrieves all responses for end user.
 
 ### Scope Parameters
 
-Scope paramaters filter your responses and can also be chained together by passing multiple scope paramters in an array.
+Scope parameters filter your responses and can also be chained together by passing multiple scope parameters in an array.
 
 Parameter | Type | Default | Description
 --------- | ------- | ------- | -----
@@ -118,7 +173,7 @@ This endpoint retrieves all promoters responses for end user.
 
 ### Scope Parameters
 
-Scope paramaters filter your promoters responses and can also be chained together by passing multiple scope parameters in an array.
+Scope parameters filter your promoters responses and can also be chained together by passing multiple scope parameters in an array.
 
 Parameter | Type | Default | Description
 --------- | ------- | ------- | -----
@@ -173,7 +228,7 @@ This endpoint retrieves all passives responses for end user.
 
 ### Scope Parameters
 
-Scope paramaters filter your passives responses and can also be chained together by passing multiple scope paramters in an array.
+Scope parameters filter your passives responses and can also be chained together by passing multiple scope parameters in an array.
 
 Parameter | Type | Default | Description
 --------- | ------- | ------- | -----
@@ -228,7 +283,7 @@ This endpoint retrieves all detractors responses for end user.
 
 ### Scope Parameters
 
-Scope paramaters filter your detractors responses and can also be chained together by passing multiple scope paramters in an array.
+Scope parameters filter your detractors responses and can also be chained together by passing multiple scope parameters in an array.
 
 Parameter | Type | Default | Description
 --------- | ------- | ------- | -----
