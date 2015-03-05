@@ -909,16 +909,16 @@ curl -X POST -H <span class="s2">"Authorization: Bearer myaccesstoken"</span> <s
 <td>The end user response score (values from 0 to 10)</td>
 </tr>
 <tr>
-<td>IP_ADDRESS</td>
-<td>IP address the response originated from</td>
-</tr>
-<tr>
 <td>ORIGIN_URL</td>
 <td>URL the response originated from</td>
 </tr>
 <tr>
 <td>text (optional)</td>
 <td>The end user comment to the response</td>
+</tr>
+<tr>
+<td>created_at (optional)</td>
+<td>UNIX timestamp, if present, will set &lsquo;created_at&rsquo; of newly created response to provided value</td>
 </tr>
 </tbody></table>
 <h2 id='delete-response'>Delete Response</h2><pre><code class="highlight shell">curl -X DELETE <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/respones/1?access_token=myaccesstoken"</span>
@@ -1117,6 +1117,10 @@ curl -X POST -H <span class="s2">"Authorization: Bearer myaccesstoken"</span> <s
 <tr>
 <td>END_USER_ID</td>
 <td>The ID of the end user</td>
+</tr>
+<tr>
+<td>created_at (optional)</td>
+<td>UNIX timestamp, if present, will set &lsquo;created_at&rsquo; of newly created decline to provided value</td>
 </tr>
 </tbody></table>
 <h2 id='delete-decline'>Delete Decline</h2><pre><code class="highlight shell">curl -X DELETE <span class="s2">"http://api.staging.wootric.com/v1/end_users/1/declines/1?access_token=myaccesstoken"</span>
